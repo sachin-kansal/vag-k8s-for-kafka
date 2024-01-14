@@ -1,10 +1,19 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 #hello sachin was here
+#$myscript = <<MYSCRIPT
+#echo "hello world"
+#touch files.txt
+#cat > readme.txt <<EOF
+#this is the value i wantedd to show
+#EOF 
+#MYSCRIPT
+
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
+
 Vagrant.configure("2") do |config|
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
@@ -12,13 +21,34 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "hashicorp/bionic64"
+  config.vm.box = "bento/ubuntu-22.04"
+  #config.vm.network "forwarded_port", guest: 80, host: 5050, host_ip: "127.0.0.1"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
-  # config.vm.box_check_update = false
+  #config.vm.box_check_update = false
+  #config.vbguest.auto_update = false  # prevent auto update of vbguest plugin if installed
 
+  #config.vm.provision "file",
+  #   source: "..//output.txt",  # path of file taken into account
+  #   destination:  "~//temp//myfiles"  #path till file name here myfiles was considered as file containing info
+  
+  #config.vm.provision "shell",
+  # inline: "sudo apt install -y apache2"
+  config.vm.provision "shell",
+    inline: "touch file.txt"
+
+#  config.vm.provision "shell",
+#     path: ""
+
+config.vm.define "master" do |master|
+  master.vm.provision "shell", path: "..//common.sh"
+end
+
+#config.vm.define worker do |worker|
+#  worker.vm.provision "file", source:"" ,destination: ""
+#end
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
@@ -28,7 +58,7 @@ Vagrant.configure("2") do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine and only allow access
   # via 127.0.0.1 to disable public access
-  # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+ 
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
