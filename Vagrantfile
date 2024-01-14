@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
 #     path: ""
 
 config.vm.define "master" do |master|
-  master.vm.provision "shell", path: "..//common.sh"
+  master.vm.provision "shell", path: ".//scripts//common.sh"
 end
 
 #config.vm.define worker do |worker|
